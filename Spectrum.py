@@ -8,10 +8,10 @@ import os
 import pandas as pd
 import seaborn as sns
 import time
-sns.set_style('whitegrid')
-path = 'G:\\Python\\Astronomy\\first_train_data_20180131'
+sns.set_style('whitegrid')#Visualize data
+path = 'G:\\Python\\Astronomy\\first_train_data_20180131'#Read files containing data
 dirs = os.listdir(path)
-data = pd.read_csv('G:\\Python\\Astronomy\\first_train_index_20180131.csv', encoding = 'gbk')
+data = pd.read_csv('G:\\Python\\Astronomy\\first_train_index_20180131.csv', encoding = 'gbk')#Read the classification
 import matplotlib.pyplot as plt
 o = 1
 while o <= 5:
@@ -27,37 +27,47 @@ while o <= 5:
             title1.append(title.iloc[0,k])
         k = k + 1
     title1 = pd.DataFrame(title1)
-    title1.plot()
-    plt.title(data['type'][o-2])
+    title1.plot()#Plot
+    plt.title(data['type'][o-2])#Match the graphs with classifications
 
 
 # In[3]:
 
 
-print (len(dirs))
+print (len(dirs))#Length of the data
 
 
 # In[4]:
 
-data.head()
+data.head()#Check whether the data are read properly
 
 
 # In[5]:
 
 
-data.info()
+data.info()#Overview of the data
 
 
 # In[6]:
 
 
-data.describe()
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+import numpy as np
+data['type'].value_counts().plot(kind='pie')
+plt.title('Number of classifications')
+plt.xlabel('Type')
+plt.ylabel('Count')
+new_ticks = np.linspace(1,1,20) 
+plt.xticks(new_ticks) 
+plt.show()
+sns.despine#Draw a bar chart with the different classifications
 
 
 # In[ ]:
 
 
-data['type'].value_counts()
+data['type'].value_counts()#Count the value of different classifications
 
 
 # In[ ]:
@@ -74,9 +84,9 @@ def get_str_split(value):
     else:
         return value
 for id_per in (data['id'].tolist()[:483851]):
-    id_set.append(id_per)  #设置容器，存放数据
-    dt = pd.read_table(('%s/%s.txt') % (root_path, id_per), sep=",") #读取文本数据
-    dt_values = [get_str_split(col) for col in dt.columns.tolist()]  #检查数据
+    id_set.append(id_per)  #Set a container to put data in
+    dt = pd.read_table(('%s/%s.txt') % (root_path, id_per), sep=",") #Put the data into the container
+    dt_values = [get_str_split(col) for col in dt.columns.tolist()]  #Check to ensure no wrong data(with two decimal points) in
     feat_set.append(dt_values)
     # print feat_set
 
@@ -88,10 +98,10 @@ for i in range(len(y_train)):
     if y_train[i] == 'galaxy': y_train[i] = 2
     if y_train[i] == 'unknown': y_train[i] = 3
 x_train, x_test, y_train, y_test = train_test_split(x_train, y_train, test_size=0.3, random_state=0)
-
+#To change the classification into numbers with are suitable for the algorithm
 # In[ ]:
 
-
+#KNN
 from sklearn.neighbors import KNeighborsClassifier
 knn = KNeighborsClassifier()
 training_start = time.perf_counter()
@@ -110,7 +120,7 @@ print("Time consumed for prediction: %6.5f seconds" % (knn_prediction_time))
 
 # In[ ]:
 
-
+#Naive Bayes
 from sklearn.naive_bayes import GaussianNB
 gnb = GaussianNB()
 training_start = time.perf_counter()
@@ -129,7 +139,7 @@ print("Time consumed for prediction: %6.5f seconds" % (gnb_prediction_time))
 
 # In[ ]:
 
-
+#XGboost
 from xgboost import XGBClassifier
 xgb = XGBClassifier(n_estimators=100)
 training_start = time.perf_counter()
@@ -148,7 +158,7 @@ print("Time consumed for prediction: %6.5f seconds" % (xgb_prediction_time))
 
 # In[ ]:
 
-
+#SVC
 from sklearn.svm import SVC
 svc = SVC()
 training_start = time.perf_counter()
@@ -168,7 +178,7 @@ print(preds)
 
 # In[ ]:
 
-
+#Use a chart to show the results for different algorithms
 results = pd.DataFrame({
     'Model': ['KNN', 'Naive Bayes', 
               'XGBoost', 'SVC'],
