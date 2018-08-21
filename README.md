@@ -1,1 +1,1 @@
-# Spectrun
+# Spectrum
