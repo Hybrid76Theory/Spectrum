@@ -28,24 +28,28 @@ while o <= 5:
         k = k + 1
     title1 = pd.DataFrame(title1)
     title1.plot()#Plot
-    plt.title(data['type'][o-2])#Match the graphs with classifications
+    plt.title(data['type'][o-2])
+#Match the graphs with classifications
 
 
 # In[3]:
 
 
-print (len(dirs))#Length of the data
+print (len(dirs))
+#Length of the data
 
 
 # In[4]:
 
-data.head()#Check whether the data are read properly
+data.head()
+#Check whether the data are read properly
 
 
 # In[5]:
 
 
-data.info()#Overview of the data
+data.info()
+#Overview of the data
 
 
 # In[6]:
@@ -67,7 +71,8 @@ sns.despine#Draw a bar chart with the different classifications
 # In[ ]:
 
 
-data['type'].value_counts()#Count the value of different classifications
+data['type'].value_counts()
+#Count the value of different classifications
 
 
 # In[ ]:
